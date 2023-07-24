@@ -1,0 +1,20 @@
+{
+  "name": "@beyounger/validator",
+  "version": "0.0.1",
+  "description": "Get device information by javascript.",
+  "main": "dist/device.export.js",
+  "scripts": {
+    "build": "./build.sh"
+  },
+  "keywords": [],
+  "author": "beyounger",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.18.10",
+    "@babel/core": "^7.18.10",
+    "@babel/preset-env": "^7.18.10"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
