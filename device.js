@@ -916,7 +916,7 @@ const Device = (function () {
           browserInfo: MethodLibrary.getBrowserInfo(), // 浏览器信息
           fingerprint: MethodLibrary.createFingerprint(params && params.domain || ''), // 浏览器指纹
           userAgent: VariableLibrary.navigator.userAgent, // 包含 appCodeName,appName,appVersion,language,platform 等
-          geoPosition: false, // 获取地理位置
+          geoPosition: params.geoPosition || false, // 获取地理位置
           date: MethodLibrary.getDate(), // 获取阳历日期时间
           lunarDate: MethodLibrary.toLunarDate(params && params.transferDateToLunar || ''), // 获取农历日期时间
           week: MethodLibrary.getWeek(), // 获取周几

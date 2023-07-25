@@ -3,13 +3,13 @@
 ## npm 引入
 
 ```bash
-yarn add @skillnull/device-js
+yarn add @beyounger/validator
 # or with npm
-npm install @skillnull/device-js
+npm install @beyounger/validator
 ```
 
 ```js
-import Device from '@skillnull/device-js'
+import Device from '@beyounger/validator'
 
 /**
 * @params:{
@@ -24,7 +24,9 @@ import Device from '@skillnull/device-js'
 Device.Info({
  domain: 'your domain',
  transferDateToLunar: '需要转化为农历的日期。例如： 2023/01/01。',
- info: ['lunarDate']
+ info: ['lunarDate'],
+ geoPosition: true, // 是否获取经纬度
+ 
 }).then(data => {
  console.log(data)
 })
@@ -48,6 +50,72 @@ Device.Info().then(data => {
 
 ### usage
 
+#### 获取设备信息
+
 ```js
+  const params = await Device.Info({
+    domain: 'https://www.beyounger.com',
+    // transferDateToLunar: '2023/1/30',
+    info: '',
+    geoPosition: true,
+    
+  })
+
+```
+
+#### 上报设备信息
+
+```js
+const Submit =async () => {
+  const params = await Device.Info({
+    domain: '<https://www.beyounger.com>',
+    // transferDateToLunar: '2023/1/30',
+    info: '',
+    geoPosition: true,
+
+  })
+  const  {
+
+    week,
+    userAgent,
+    deviceType,
+    OS,
+    OSVersion,
+    screenHeight,
+    screenWidth,
+    language,
+    netWork,
+    orientation,
+    browserInfo,
+    fingerprint,
+    geoPosition,
+    date,
+    lunarDate,
+    UUID
+
+  } = params
+  const submitParams = {
+    week,
+    user_agent: userAgent,
+    device_type: deviceType,
+    os: OS,
+    os_version: OSVersion,
+    screen_height: screenHeight,
+    screen_width: screenWidth,
+    language: language,
+    net_work: netWork,
+    orientation: orientation,
+    browser_info: browserInfo,
+    fingerprint: fingerprint,
+    user_agent:userAgent,
+    geo_position: geoPosition,
+    date: date,
+    lunar_date: `${lunarDate.year} ${lunarDate.chineseZodiac} ${lunarDate.month}${lunarDate.date}`,
+    uuid: UUID,
+  }
+
+  // console.log(submitParams)
+  Device.Submit(submitParams)
+}
 
 ```

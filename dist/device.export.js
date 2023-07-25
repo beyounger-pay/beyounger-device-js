@@ -901,7 +901,7 @@ var Device = function () {
           // 浏览器指纹
           userAgent: VariableLibrary.navigator.userAgent,
           // 包含 appCodeName,appName,appVersion,language,platform 等
-          geoPosition: false,
+          geoPosition: params.geoPosition || false,
           // 获取地理位置
           date: MethodLibrary.getDate(),
           // 获取阳历日期时间
@@ -985,9 +985,7 @@ var Device = function () {
                 // include, *same-origin, omit
                 headers: {
                   'Content-Type': 'application/json'
-                  // 'Content-Type': 'application/x-www-form-urlencoded',
                 },
-
                 redirect: 'follow',
                 // manual, *follow, error
                 referrerPolicy: 'no-referrer',

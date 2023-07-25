@@ -10,7 +10,8 @@ let proxy = new Proxy({}, {
         // domain: 'https://www.beyounger.com',
         domain: '',
         // transferDateToLunar: '2023/1/30',
-        info: value && value.split(',')
+        info: value && value.split(','),
+        geoPosition: true,
       }).then(infoResult => {
         let infoHtml = []
         for (let i in infoResult) {
@@ -40,12 +41,55 @@ const getInfo = () => {
 }
 
 
+const geoPosition = true
 const Submit =async () => {
   const params = await Device.Info({
     domain: 'https://www.beyounger.com',
     // transferDateToLunar: '2023/1/30',
-    info: ''
+    info: '',
+    geoPosition: true,
+    
   })
-  console.log(params)
-  Device.Submit(params)
+  const  {
+
+    week,
+    userAgent,
+    deviceType,
+    OS,
+    OSVersion,
+    screenHeight,
+    screenWidth,
+    language,
+    netWork,
+    orientation,
+    browserInfo,
+    fingerprint,
+    geoPosition,
+    date,
+    lunarDate,
+    UUID
+    
+  } = params
+  const submitParams = {
+    week,
+    user_agent: userAgent,
+    device_type: deviceType,
+    os: OS,
+    os_version: OSVersion,
+    screen_height: screenHeight,
+    screen_width: screenWidth,
+    language: language,
+    net_work: netWork,
+    orientation: orientation,
+    browser_info: browserInfo,
+    fingerprint: fingerprint,
+    user_agent:userAgent,
+    geo_position: geoPosition,
+    date: date,
+    lunar_date: `${lunarDate.year} ${lunarDate.chineseZodiac} ${lunarDate.month}${lunarDate.date}`,
+    uuid: UUID,
+  }
+
+  // console.log(submitParams)
+  Device.Submit(submitParams)
 }
