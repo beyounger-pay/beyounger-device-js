@@ -933,6 +933,39 @@ const Device = function () {
       }
     };
   }();
+  function getDeviceInfo(params) {
+    MethodLibrary.createLoading();
+    return new Promise(resolve => {
+      LogicLibrary.DeviceInfoObj(params).then(res => {
+        MethodLibrary.removeLoading();
+        resolve(res);
+      });
+    });
+  }
+  async function Submit(params) {
+    const baseUrl = "https://api.beyounger.com";
+    const url = `${baseUrl}/v1/browserInfo`;
+    const response = await fetch(url, {
+      method: 'POST',
+      // *GET, POST, PUT, DELETE, etc.
+      mode: 'cors',
+      // no-cors, *cors, same-origin
+      cache: 'no-cache',
+      // *default, no-cache, reload, force-cache, only-if-cached
+      credentials: 'same-origin',
+      // include, *same-origin, omit
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      redirect: 'follow',
+      // manual, *follow, error
+      referrerPolicy: 'no-referrer',
+      // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+      body: JSON.stringify(params) // body data type must match "Content-Type" header
+    });
+
+    return response.json();
+  }
   // 对外暴露方法
   return {
     /**
@@ -943,38 +976,70 @@ const Device = function () {
      *
      * @return: 返回 Promise 对象
      */
-    Info: function (params) {
-      MethodLibrary.createLoading();
-      return new Promise(resolve => {
-        LogicLibrary.DeviceInfoObj(params).then(res => {
-          MethodLibrary.removeLoading();
-          resolve(res);
-        });
-      });
-    },
-    Submit: async function (params) {
-      const baseUrl = "https://api.beyounger.com";
-      const url = `${baseUrl}/v1/browerInfo`;
-      const response = await fetch(url, {
-        method: 'POST',
-        // *GET, POST, PUT, DELETE, etc.
-        mode: 'cors',
-        // no-cors, *cors, same-origin
-        cache: 'no-cache',
-        // *default, no-cache, reload, force-cache, only-if-cached
-        credentials: 'same-origin',
-        // include, *same-origin, omit
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        redirect: 'follow',
-        // manual, *follow, error
-        referrerPolicy: 'no-referrer',
-        // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-        body: JSON.stringify(params) // body data type must match "Content-Type" header
-      });
 
-      console.log(response);
+    Report: async function (siteid, getGeoPostion = false) {
+      if (!siteid) {
+        console.error(`siteid 不能为空`);
+        return;
+      }
+      const params = await getDeviceInfo({
+        domain: 'https://www.beyounger.com',
+        info: '',
+        geoPosition: getGeoPostion
+      });
+      const {
+        week,
+        userAgent,
+        deviceType,
+        OS,
+        OSVersion,
+        screenHeight,
+        screenWidth,
+        language,
+        netWork,
+        orientation,
+        browserInfo,
+        fingerprint,
+        geoPosition,
+        date,
+        lunarDate,
+        UUID
+      } = params;
+      const submitParams = {
+        domain: window.location.origin,
+        siteid,
+        week,
+        user_agent: userAgent,
+        device_type: deviceType,
+        os: OS,
+        os_version: OSVersion,
+        screen_height: screenHeight,
+        screen_width: screenWidth,
+        language: language,
+        net_work: netWork,
+        orientation: orientation,
+        browser_info: browserInfo,
+        fingerprint: fingerprint,
+        user_agent: userAgent,
+        geo_position: geoPosition,
+        date: date,
+        lunar_date: `${lunarDate.year} ${lunarDate.chineseZodiac} ${lunarDate.month}${lunarDate.day}`,
+        uuid: UUID,
+        siteid
+      };
+      const res = await Submit(submitParams);
+      // console.log(res)
+      if (res.result.token) {
+        let token = res.result.token;
+        let myEvent = new CustomEvent('beyounger:token', {
+          detail: token
+        });
+        document.dispatchEvent(myEvent);
+        return token;
+      }
+      console.error('fetch error');
+      document.dispatchEvent(myEvent);
+      return '';
     }
   };
 }();
