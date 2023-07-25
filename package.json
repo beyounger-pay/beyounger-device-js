@@ -4,7 +4,8 @@
   "description": "Get device information by javascript.",
   "main": "dist/device.export.js",
   "scripts": {
-    "build": "./build.sh"
+    "build": "./build.sh",
+    "min": "uglifyjs dist/device.js -m -c -o dist/device.min.js"
   },
   "keywords": [],
   "author": "beyounger",
@@ -12,9 +13,11 @@
   "devDependencies": {
     "@babel/cli": "^7.18.10",
     "@babel/core": "^7.18.10",
-    "@babel/preset-env": "^7.18.10"
+    "@babel/preset-env": "^7.18.10",
+    "uglify-js": "^3.17.4"
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "dependencies": {}
 }

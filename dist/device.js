@@ -1,14 +1,8 @@
-"use strict";
-
-function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
-function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return exports; }; var exports = {}, Op = Object.prototype, hasOwn = Op.hasOwnProperty, defineProperty = Object.defineProperty || function (obj, key, desc) { obj[key] = desc.value; }, $Symbol = "function" == typeof Symbol ? Symbol : {}, iteratorSymbol = $Symbol.iterator || "@@iterator", asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator", toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag"; function define(obj, key, value) { return Object.defineProperty(obj, key, { value: value, enumerable: !0, configurable: !0, writable: !0 }), obj[key]; } try { define({}, ""); } catch (err) { define = function define(obj, key, value) { return obj[key] = value; }; } function wrap(innerFn, outerFn, self, tryLocsList) { var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator, generator = Object.create(protoGenerator.prototype), context = new Context(tryLocsList || []); return defineProperty(generator, "_invoke", { value: makeInvokeMethod(innerFn, self, context) }), generator; } function tryCatch(fn, obj, arg) { try { return { type: "normal", arg: fn.call(obj, arg) }; } catch (err) { return { type: "throw", arg: err }; } } exports.wrap = wrap; var ContinueSentinel = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var IteratorPrototype = {}; define(IteratorPrototype, iteratorSymbol, function () { return this; }); var getProto = Object.getPrototypeOf, NativeIteratorPrototype = getProto && getProto(getProto(values([]))); NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype); var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype); function defineIteratorMethods(prototype) { ["next", "throw", "return"].forEach(function (method) { define(prototype, method, function (arg) { return this._invoke(method, arg); }); }); } function AsyncIterator(generator, PromiseImpl) { function invoke(method, arg, resolve, reject) { var record = tryCatch(generator[method], generator, arg); if ("throw" !== record.type) { var result = record.arg, value = result.value; return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) { invoke("next", value, resolve, reject); }, function (err) { invoke("throw", err, resolve, reject); }) : PromiseImpl.resolve(value).then(function (unwrapped) { result.value = unwrapped, resolve(result); }, function (error) { return invoke("throw", error, resolve, reject); }); } reject(record.arg); } var previousPromise; defineProperty(this, "_invoke", { value: function value(method, arg) { function callInvokeWithMethodAndArg() { return new PromiseImpl(function (resolve, reject) { invoke(method, arg, resolve, reject); }); } return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(innerFn, self, context) { var state = "suspendedStart"; return function (method, arg) { if ("executing" === state) throw new Error("Generator is already running"); if ("completed" === state) { if ("throw" === method) throw arg; return doneResult(); } for (context.method = method, context.arg = arg;;) { var delegate = context.delegate; if (delegate) { var delegateResult = maybeInvokeDelegate(delegate, context); if (delegateResult) { if (delegateResult === ContinueSentinel) continue; return delegateResult; } } if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) { if ("suspendedStart" === state) throw state = "completed", context.arg; context.dispatchException(context.arg); } else "return" === context.method && context.abrupt("return", context.arg); state = "executing"; var record = tryCatch(innerFn, self, context); if ("normal" === record.type) { if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue; return { value: record.arg, done: context.done }; } "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg); } }; } function maybeInvokeDelegate(delegate, context) { var methodName = context.method, method = delegate.iterator[methodName]; if (undefined === method) return context.delegate = null, "throw" === methodName && delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method) || "return" !== methodName && (context.method = "throw", context.arg = new TypeError("The iterator does not provide a '" + methodName + "' method")), ContinueSentinel; var record = tryCatch(method, delegate.iterator, context.arg); if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel; var info = record.arg; return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel); } function pushTryEntry(locs) { var entry = { tryLoc: locs[0] }; 1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry); } function resetTryEntry(entry) { var record = entry.completion || {}; record.type = "normal", delete record.arg, entry.completion = record; } function Context(tryLocsList) { this.tryEntries = [{ tryLoc: "root" }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0); } function values(iterable) { if (iterable) { var iteratorMethod = iterable[iteratorSymbol]; if (iteratorMethod) return iteratorMethod.call(iterable); if ("function" == typeof iterable.next) return iterable; if (!isNaN(iterable.length)) { var i = -1, next = function next() { for (; ++i < iterable.length;) if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next; return next.value = undefined, next.done = !0, next; }; return next.next = next; } } return { next: doneResult }; } function doneResult() { return { value: undefined, done: !0 }; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, defineProperty(Gp, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), defineProperty(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) { var ctor = "function" == typeof genFun && genFun.constructor; return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name)); }, exports.mark = function (genFun) { return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun; }, exports.awrap = function (arg) { return { __await: arg }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () { return this; }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) { void 0 === PromiseImpl && (PromiseImpl = Promise); var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl); return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) { return result.done ? result.value : iter.next(); }); }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () { return this; }), define(Gp, "toString", function () { return "[object Generator]"; }), exports.keys = function (val) { var object = Object(val), keys = []; for (var key in object) keys.push(key); return keys.reverse(), function next() { for (; keys.length;) { var key = keys.pop(); if (key in object) return next.value = key, next.done = !1, next; } return next.done = !0, next; }; }, exports.values = values, Context.prototype = { constructor: Context, reset: function reset(skipTempReset) { if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined); }, stop: function stop() { this.done = !0; var rootRecord = this.tryEntries[0].completion; if ("throw" === rootRecord.type) throw rootRecord.arg; return this.rval; }, dispatchException: function dispatchException(exception) { if (this.done) throw exception; var context = this; function handle(loc, caught) { return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught; } for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i], record = entry.completion; if ("root" === entry.tryLoc) return handle("end"); if (entry.tryLoc <= this.prev) { var hasCatch = hasOwn.call(entry, "catchLoc"), hasFinally = hasOwn.call(entry, "finallyLoc"); if (hasCatch && hasFinally) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } else if (hasCatch) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); } else { if (!hasFinally) throw new Error("try statement without catch or finally"); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } } } }, abrupt: function abrupt(type, arg) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) { var finallyEntry = entry; break; } } finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null); var record = finallyEntry ? finallyEntry.completion : {}; return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record); }, complete: function complete(record, afterLoc) { if ("throw" === record.type) throw record.arg; return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel; }, finish: function finish(finallyLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel; } }, "catch": function _catch(tryLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc === tryLoc) { var record = entry.completion; if ("throw" === record.type) { var thrown = record.arg; resetTryEntry(entry); } return thrown; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(iterable, resultName, nextLoc) { return this.delegate = { iterator: values(iterable), resultName: resultName, nextLoc: nextLoc }, "next" === this.method && (this.arg = undefined), ContinueSentinel; } }, exports; }
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-var Device = function () {
-  var root = typeof self !== 'undefined' ? self : this;
-  var _window = root || {};
+const Device = function () {
+  const root = typeof self !== 'undefined' ? self : this;
+  const _window = root || {};
   // 变量库
-  var VariableLibrary = {
+  const VariableLibrary = {
     navigator: typeof root.navigator != 'undefined' ? root.navigator : {},
     // 信息map
     infoMap: {
@@ -81,28 +75,28 @@ var Device = function () {
     }
   };
   // 方法库
-  var MethodLibrary = function () {
+  const MethodLibrary = function () {
     return {
       /**
        * 创建loading
        */
-      createLoading: function createLoading(text, showTimeCount) {
-        var count = 1;
-        var timeCountStr = '';
+      createLoading: function (text, showTimeCount) {
+        let count = 1;
+        let timeCountStr = '';
         if (showTimeCount) {
           timeCountStr = '<div id="count_box" style="padding: 5px 10px;' + '    border-radius: 50%;' + '    color: white;' + '    background-color: #28a745;' + '    font-size: 16px;' + '    font-weight: 300;' + '    width: 80px;' + '    height: 80px;' + '    display: flex;' + '    justify-content: center;' + '    flex-direction: column;' + '    align-items: center;">' + '   <div>' + count + 's</div>' + '</div>';
         }
-        var textStr = '';
+        let textStr = '';
         if (text) {
           textStr = '<div style="padding: 5px 10px;border-radius: 3px;color:white;background-color: #28a745;font-size: 16px;font-weight: 300;">' + text + '</div>';
         }
-        var loading = document.createElement('div');
+        let loading = document.createElement('div');
         loading.id = 'create_loading';
         loading.style = 'display: block;' + '    position: fixed;' + '    top: 0;' + '    left: 0;' + '    width: 100%;' + '    height: 100%;' + '    z-index: 9999999999;' + '    text-align: center;' + '    font-size: 14px;' + '    display: flex;' + '    flex: 1;' + '    justify-content: center;' + '    flex-direction: column;' + '    align-items: center;' + '    background: rgba(0, 0, 0, 0.09);';
         loading.innerHTML = timeCountStr + '<div class="ball-pulse" style="padding: 15px;">' + '    <div></div>' + '    <div></div>' + '    <div></div>' + '</div>' + textStr;
         document.body.appendChild(loading);
         if (showTimeCount) {
-          var countBox = document.getElementById('count_box');
+          let countBox = document.getElementById('count_box');
           setInterval(function () {
             count++;
             if (countBox) {
@@ -114,15 +108,15 @@ var Device = function () {
       /**
        * 删除loading
        */
-      removeLoading: function removeLoading() {
-        var loading = document.getElementById('create_loading');
+      removeLoading: function () {
+        let loading = document.getElementById('create_loading');
         document.body.removeChild(loading);
       },
       // 生成UUID通用唯一标识码
-      createUUID: function createUUID() {
-        var result = [];
-        var hexDigits = "0123456789abcdef";
-        for (var i = 0; i < 36; i++) {
+      createUUID: function () {
+        let result = [];
+        let hexDigits = "0123456789abcdef";
+        for (let i = 0; i < 36; i++) {
           result[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
         }
         // bits 12-15 of the time_hi_and_version field to 0010
@@ -133,26 +127,26 @@ var Device = function () {
         return result.join("");
       },
       // 获取阳历日期时间
-      getDate: function getDate() {
-        var date = new Date();
-        var year = date.getFullYear();
-        var month = date.getMonth() + 1;
-        var day = date.getDate();
-        var hour = date.getHours();
-        var minutes = date.getMinutes();
-        var seconds = date.getSeconds();
-        return "".concat(year, "/").concat(month, "/").concat(day, " ").concat(hour, ":").concat(minutes, ":").concat(seconds);
+      getDate: function () {
+        let date = new Date();
+        let year = date.getFullYear();
+        let month = date.getMonth() + 1;
+        let day = date.getDate();
+        let hour = date.getHours();
+        let minutes = date.getMinutes();
+        let seconds = date.getSeconds();
+        return `${year}/${month}/${day} ${hour}:${minutes}:${seconds}`;
       },
       // 获取当前周几
-      getWeek: function getWeek() {
-        var show_week = new Array('周日', '周一', '周二', '周三', '周四', '周五', '周六');
-        var time = new Date();
-        var day = time.getDay();
-        var now_week = show_week[day];
+      getWeek: function () {
+        let show_week = new Array('周日', '周一', '周二', '周三', '周四', '周五', '周六');
+        let time = new Date();
+        let day = time.getDay();
+        let now_week = show_week[day];
         return now_week;
       },
       // 获取匹配库
-      getMatchMap: function getMatchMap(u) {
+      getMatchMap: function (u) {
         return {
           // 内核
           'Trident': u.indexOf('Trident') > -1 || u.indexOf('NET CLR') > -1,
@@ -228,12 +222,12 @@ var Device = function () {
         };
       },
       // 在信息map和匹配库中进行匹配
-      matchInfoMap: function matchInfoMap(_this) {
-        var u = VariableLibrary.navigator.userAgent || {};
-        var match = MethodLibrary.getMatchMap(u);
-        for (var s in VariableLibrary.infoMap) {
-          for (var i = 0; i < VariableLibrary.infoMap[s].length; i++) {
-            var value = VariableLibrary.infoMap[s][i];
+      matchInfoMap: function (_this) {
+        let u = VariableLibrary.navigator.userAgent || {};
+        let match = MethodLibrary.getMatchMap(u);
+        for (let s in VariableLibrary.infoMap) {
+          for (let i = 0; i < VariableLibrary.infoMap[s].length; i++) {
+            let value = VariableLibrary.infoMap[s][i];
             if (match[value]) {
               _this[s] = value;
             }
@@ -241,21 +235,21 @@ var Device = function () {
         }
       },
       // 获取当前操作系统
-      getOS: function getOS() {
-        var _this = this;
+      getOS: function () {
+        let _this = this;
         MethodLibrary.matchInfoMap(_this);
         return _this.os;
       },
       // 获取操作系统版本
-      getOSVersion: function getOSVersion() {
-        var _this = this;
-        var u = VariableLibrary.navigator.userAgent || {};
+      getOSVersion: function () {
+        let _this = this;
+        let u = VariableLibrary.navigator.userAgent || {};
         _this.osVersion = '';
         // 系统版本信息
-        var osVersion = {
-          'Windows': function Windows() {
-            var v = u.replace(/^.*Windows NT ([\d.]+);.*$/, '$1');
-            var oldWindowsVersionMap = {
+        let osVersion = {
+          'Windows': function () {
+            let v = u.replace(/^.*Windows NT ([\d.]+);.*$/, '$1');
+            let oldWindowsVersionMap = {
               '10': '10 || 11',
               '6.3': '8.1',
               '6.2': '8',
@@ -271,22 +265,22 @@ var Device = function () {
             };
             return oldWindowsVersionMap[v] || v;
           },
-          'Android': function Android() {
+          'Android': function () {
             return u.replace(/^.*Android ([\d.]+);.*$/, '$1');
           },
-          'iOS': function iOS() {
+          'iOS': function () {
             return u.replace(/^.*OS ([\d_]+) like.*$/, '$1').replace(/_/g, '.');
           },
-          'Debian': function Debian() {
+          'Debian': function () {
             return u.replace(/^.*Debian\/([\d.]+).*$/, '$1');
           },
-          'Windows Phone': function WindowsPhone() {
+          'Windows Phone': function () {
             return u.replace(/^.*Windows Phone( OS)? ([\d.]+);.*$/, '$2');
           },
-          'Mac OS': function MacOS() {
+          'Mac OS': function () {
             return u.replace(/^.*Mac OS X ([\d_]+).*$/, '$1').replace(/_/g, '.');
           },
-          'WebOS': function WebOS() {
+          'WebOS': function () {
             return u.replace(/^.*hpwOS\/([\d.]+);.*$/, '$1');
           }
         };
@@ -299,9 +293,9 @@ var Device = function () {
         return _this.osVersion;
       },
       // 获取横竖屏状态
-      getOrientationStatu: function getOrientationStatu() {
-        var orientationStatus = '';
-        var orientation = window.matchMedia("(orientation: portrait)");
+      getOrientationStatu: function () {
+        let orientationStatus = '';
+        let orientation = window.matchMedia("(orientation: portrait)");
         if (orientation.matches) {
           orientationStatus = "竖屏";
         } else {
@@ -310,23 +304,23 @@ var Device = function () {
         return orientationStatus;
       },
       // 获取设备类型
-      getDeviceType: function getDeviceType() {
-        var _this = this;
+      getDeviceType: function () {
+        let _this = this;
         _this.device = 'PC';
         MethodLibrary.matchInfoMap(_this);
         return _this.device;
       },
       // 获取网络状态
-      getNetwork: function getNetwork() {
-        var netWork = navigator && navigator.connection && navigator.connection.effectiveType;
+      getNetwork: function () {
+        let netWork = navigator && navigator.connection && navigator.connection.effectiveType;
         return netWork;
       },
       // 获取当前语言
-      getLanguage: function getLanguage() {
-        var _this = this;
+      getLanguage: function () {
+        let _this = this;
         _this.language = function () {
-          var language = VariableLibrary.navigator.browserLanguage || VariableLibrary.navigator.language;
-          var arr = language.split('-');
+          let language = VariableLibrary.navigator.browserLanguage || VariableLibrary.navigator.language;
+          let arr = language.split('-');
           if (arr[1]) {
             arr[1] = arr[1].toUpperCase();
           }
@@ -335,10 +329,10 @@ var Device = function () {
         return _this.language;
       },
       // 生成浏览器指纹
-      createFingerprint: function createFingerprint(domain) {
-        var fingerprint;
+      createFingerprint: function (domain) {
+        let fingerprint;
         function bin2hex(s) {
-          var i,
+          let i,
             l,
             n,
             o = '';
@@ -349,9 +343,9 @@ var Device = function () {
           }
           return o;
         }
-        var canvas = document.createElement('canvas');
-        var ctx = canvas.getContext('2d');
-        var txt = domain || window.location.host;
+        let canvas = document.createElement('canvas');
+        let ctx = canvas.getContext('2d');
+        let txt = domain || window.location.host;
         ctx.textBaseline = "top";
         ctx.font = "14px 'Arial'";
         ctx.textBaseline = "tencent";
@@ -361,30 +355,30 @@ var Device = function () {
         ctx.fillText(txt, 2, 15);
         ctx.fillStyle = "rgba(102, 204, 0, 0.7)";
         ctx.fillText(txt, 4, 17);
-        var b64 = canvas.toDataURL().replace("data:image/png;base64,", "");
-        var bin = atob(b64);
-        var crc = bin2hex(bin.slice(-16, -12));
+        let b64 = canvas.toDataURL().replace("data:image/png;base64,", "");
+        let bin = atob(b64);
+        let crc = bin2hex(bin.slice(-16, -12));
         fingerprint = crc;
         return fingerprint;
       },
       // 浏览器信息
-      getBrowserInfo: function getBrowserInfo() {
-        var _this = this;
+      getBrowserInfo: function () {
+        let _this = this;
         MethodLibrary.matchInfoMap(_this);
-        var u = VariableLibrary.navigator.userAgent || {};
-        var _mime = function _mime(option, value) {
-          var mimeTypes = VariableLibrary.navigator.mimeTypes;
-          for (var key in mimeTypes) {
+        let u = VariableLibrary.navigator.userAgent || {};
+        let _mime = function (option, value) {
+          let mimeTypes = VariableLibrary.navigator.mimeTypes;
+          for (let key in mimeTypes) {
             if (mimeTypes[key][option] == value) {
               return true;
             }
           }
           return false;
         };
-        var match = MethodLibrary.getMatchMap(u);
-        var is360 = false;
+        let match = MethodLibrary.getMatchMap(u);
+        let is360 = false;
         if (_window.chrome) {
-          var chrome_version = u.replace(/^.*Chrome\/([\d]+).*$/, '$1');
+          let chrome_version = u.replace(/^.*Chrome\/([\d]+).*$/, '$1');
           if (chrome_version > 36 && _window.showModalDialog) {
             is360 = true;
           } else if (chrome_version > 45) {
@@ -407,7 +401,7 @@ var Device = function () {
           }
         }
         if (match['IE'] || match['Edge']) {
-          var navigator_top = window.screenTop - window.screenY;
+          let navigator_top = window.screenTop - window.screenY;
           switch (navigator_top) {
             case 71:
               // 无收藏栏,贴边
@@ -439,72 +433,72 @@ var Device = function () {
               break;
           }
         }
-        var browerVersionMap = {
-          'Safari': function Safari() {
+        let browerVersionMap = {
+          'Safari': function () {
             return u.replace(/^.*Version\/([\d.]+).*$/, '$1');
           },
-          'Chrome': function Chrome() {
+          'Chrome': function () {
             return u.replace(/^.*Chrome\/([\d.]+).*$/, '$1').replace(/^.*CriOS\/([\d.]+).*$/, '$1');
           },
-          'IE': function IE() {
+          'IE': function () {
             return u.replace(/^.*MSIE ([\d.]+).*$/, '$1').replace(/^.*rv:([\d.]+).*$/, '$1');
           },
-          'Edge': function Edge() {
+          'Edge': function () {
             return u.replace(/^.*Edge\/([\d.]+).*$/, '$1');
           },
-          'Firefox': function Firefox() {
+          'Firefox': function () {
             return u.replace(/^.*Firefox\/([\d.]+).*$/, '$1').replace(/^.*FxiOS\/([\d.]+).*$/, '$1');
           },
-          'Firefox Focus': function FirefoxFocus() {
+          'Firefox Focus': function () {
             return u.replace(/^.*Focus\/([\d.]+).*$/, '$1');
           },
-          'Chromium': function Chromium() {
+          'Chromium': function () {
             return u.replace(/^.*Chromium\/([\d.]+).*$/, '$1');
           },
-          'Opera': function Opera() {
+          'Opera': function () {
             return u.replace(/^.*Opera\/([\d.]+).*$/, '$1').replace(/^.*OPR\/([\d.]+).*$/, '$1');
           },
-          'Vivaldi': function Vivaldi() {
+          'Vivaldi': function () {
             return u.replace(/^.*Vivaldi\/([\d.]+).*$/, '$1');
           },
-          'Yandex': function Yandex() {
+          'Yandex': function () {
             return u.replace(/^.*YaBrowser\/([\d.]+).*$/, '$1');
           },
-          'Arora': function Arora() {
+          'Arora': function () {
             return u.replace(/^.*Arora\/([\d.]+).*$/, '$1');
           },
-          'Lunascape': function Lunascape() {
+          'Lunascape': function () {
             return u.replace(/^.*Lunascape[\/\s]([\d.]+).*$/, '$1');
           },
-          'QupZilla': function QupZilla() {
+          'QupZilla': function () {
             return u.replace(/^.*QupZilla[\/\s]([\d.]+).*$/, '$1');
           },
-          'Coc Coc': function CocCoc() {
+          'Coc Coc': function () {
             return u.replace(/^.*coc_coc_browser\/([\d.]+).*$/, '$1');
           },
-          'Kindle': function Kindle() {
+          'Kindle': function () {
             return u.replace(/^.*Version\/([\d.]+).*$/, '$1');
           },
-          'Iceweasel': function Iceweasel() {
+          'Iceweasel': function () {
             return u.replace(/^.*Iceweasel\/([\d.]+).*$/, '$1');
           },
-          'Konqueror': function Konqueror() {
+          'Konqueror': function () {
             return u.replace(/^.*Konqueror\/([\d.]+).*$/, '$1');
           },
-          'Iceape': function Iceape() {
+          'Iceape': function () {
             return u.replace(/^.*Iceape\/([\d.]+).*$/, '$1');
           },
-          'SeaMonkey': function SeaMonkey() {
+          'SeaMonkey': function () {
             return u.replace(/^.*SeaMonkey\/([\d.]+).*$/, '$1');
           },
-          'Epiphany': function Epiphany() {
+          'Epiphany': function () {
             return u.replace(/^.*Epiphany\/([\d.]+).*$/, '$1');
           },
-          '360': function _() {
+          '360': function () {
             return u.replace(/^.*QihooBrowser\/([\d.]+).*$/, '$1');
           },
-          '360SE': function SE() {
-            var hash = {
+          '360SE': function () {
+            let hash = {
               '63': '10.0',
               '55': '9.1',
               '45': '8.1',
@@ -512,44 +506,44 @@ var Device = function () {
               '31': '7.0',
               '21': '6.3'
             };
-            var chrome_version = u.replace(/^.*Chrome\/([\d]+).*$/, '$1');
+            let chrome_version = u.replace(/^.*Chrome\/([\d]+).*$/, '$1');
             return hash[chrome_version] || '';
           },
-          '360EE': function EE() {
-            var hash = {
+          '360EE': function () {
+            let hash = {
               '69': '11.0',
               '63': '9.5',
               '55': '9.0',
               '50': '8.7',
               '30': '7.5'
             };
-            var chrome_version = u.replace(/^.*Chrome\/([\d]+).*$/, '$1');
+            let chrome_version = u.replace(/^.*Chrome\/([\d]+).*$/, '$1');
             return hash[chrome_version] || '';
           },
-          'Maxthon': function Maxthon() {
+          'Maxthon': function () {
             return u.replace(/^.*Maxthon\/([\d.]+).*$/, '$1');
           },
-          'QQBrowser': function QQBrowser() {
+          'QQBrowser': function () {
             return u.replace(/^.*QQBrowser\/([\d.]+).*$/, '$1');
           },
-          'QQ': function QQ() {
+          'QQ': function () {
             return u.replace(/^.*QQ\/([\d.]+).*$/, '$1');
           },
-          'Baidu': function Baidu() {
+          'Baidu': function () {
             return u.replace(/^.*BIDUBrowser[\s\/]([\d.]+).*$/, '$1');
           },
-          'UC': function UC() {
+          'UC': function () {
             return u.replace(/^.*UC?Browser\/([\d.]+).*$/, '$1');
           },
-          'Sogou': function Sogou() {
+          'Sogou': function () {
             return u.replace(/^.*SE ([\d.X]+).*$/, '$1').replace(/^.*SogouMobileBrowser\/([\d.]+).*$/, '$1');
           },
-          'Liebao': function Liebao() {
-            var version = '';
+          'Liebao': function () {
+            let version = '';
             if (u.indexOf('LieBaoFast') > -1) {
               version = u.replace(/^.*LieBaoFast\/([\d.]+).*$/, '$1');
             }
-            var hash = {
+            let hash = {
               '57': '6.5',
               '49': '6.0',
               '46': '5.9',
@@ -559,15 +553,15 @@ var Device = function () {
               '29': '4.5',
               '21': '4.0'
             };
-            var chrome_version = u.replace(/^.*Chrome\/([\d]+).*$/, '$1');
+            let chrome_version = u.replace(/^.*Chrome\/([\d]+).*$/, '$1');
             return version || hash[chrome_version] || '';
           },
-          'LBBROWSER': function LBBROWSER() {
-            var version = '';
+          'LBBROWSER': function () {
+            let version = '';
             if (u.indexOf('LieBaoFast') > -1) {
               version = u.replace(/^.*LieBaoFast\/([\d.]+).*$/, '$1');
             }
-            var hash = {
+            let hash = {
               '57': '6.5',
               '49': '6.0',
               '46': '5.9',
@@ -577,58 +571,58 @@ var Device = function () {
               '29': '4.5',
               '21': '4.0'
             };
-            var chrome_version = u.replace(/^.*Chrome\/([\d]+).*$/, '$1');
+            let chrome_version = u.replace(/^.*Chrome\/([\d]+).*$/, '$1');
             return version || hash[chrome_version] || '';
           },
-          '2345Explorer': function Explorer() {
+          '2345Explorer': function () {
             return u.replace(/^.*2345Explorer\/([\d.]+).*$/, '$1');
           },
-          '115Browser': function Browser() {
+          '115Browser': function () {
             return u.replace(/^.*115Browser\/([\d.]+).*$/, '$1');
           },
-          'TheWorld': function TheWorld() {
+          'TheWorld': function () {
             return u.replace(/^.*TheWorld ([\d.]+).*$/, '$1');
           },
-          'XiaoMi': function XiaoMi() {
+          'XiaoMi': function () {
             return u.replace(/^.*MiuiBrowser\/([\d.]+).*$/, '$1');
           },
-          'Vivo': function Vivo() {
+          'Vivo': function () {
             return u.replace(/^.*VivoBrowser\/([\d.]+).*$/, '$1');
           },
-          'Quark': function Quark() {
+          'Quark': function () {
             return u.replace(/^.*Quark\/([\d.]+).*$/, '$1');
           },
-          'Qiyu': function Qiyu() {
+          'Qiyu': function () {
             return u.replace(/^.*Qiyu\/([\d.]+).*$/, '$1');
           },
-          'Wechat': function Wechat() {
+          'Wechat': function () {
             return u.replace(/^.*MicroMessenger\/([\d.]+).*$/, '$1');
           },
-          'WechatWork': function WechatWork() {
+          'WechatWork': function () {
             return u.replace(/^.*wxwork\/([\d.]+).*$/, '$1');
           },
-          'Taobao': function Taobao() {
+          'Taobao': function () {
             return u.replace(/^.*AliApp\(TB\/([\d.]+).*$/, '$1');
           },
-          'Alipay': function Alipay() {
+          'Alipay': function () {
             return u.replace(/^.*AliApp\(AP\/([\d.]+).*$/, '$1');
           },
-          'Weibo': function Weibo() {
+          'Weibo': function () {
             return u.replace(/^.*weibo__([\d.]+).*$/, '$1');
           },
-          'Douban': function Douban() {
+          'Douban': function () {
             return u.replace(/^.*com.douban.frodo\/([\d.]+).*$/, '$1');
           },
-          'Suning': function Suning() {
+          'Suning': function () {
             return u.replace(/^.*SNEBUY-APP([\d.]+).*$/, '$1');
           },
-          'iQiYi': function iQiYi() {
+          'iQiYi': function () {
             return u.replace(/^.*IqiyiVersion\/([\d.]+).*$/, '$1');
           },
-          'DingTalk': function DingTalk() {
+          'DingTalk': function () {
             return u.replace(/^.*DingTalk\/([\d.]+).*$/, '$1');
           },
-          'Huawei': function Huawei() {
+          'Huawei': function () {
             return u.replace(/^.*Version\/([\d.]+).*$/, '$1').replace(/^.*HuaweiBrowser\/([\d.]+).*$/, '$1').replace(/^.*HBPC\/([\d.]+).*$/, '$1');
           }
         };
@@ -662,8 +656,8 @@ var Device = function () {
         return _this.browser + '（版本: ' + _this.browserVersion + '&nbsp;&nbsp;内核: ' + _this.engine + '）';
       },
       // 获取地理位置
-      getGeoPostion: function getGeoPostion() {
-        return new Promise(function (resolve, reject) {
+      getGeoPostion: function () {
+        return new Promise((resolve, reject) => {
           if (navigator && navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
             // 位置获取成功
@@ -692,27 +686,27 @@ var Device = function () {
       /* 阳历转阴历
        * @date: <String> 2023/01/01
        */
-      toLunarDate: function toLunarDate(date) {
-        var now_date = new Date();
-        var date_str = date ? date.replaceAll('-', '/') : "".concat(now_date.getFullYear(), "/").concat(now_date.getMonth() + 1, "/").concat(now_date.getDate());
+      toLunarDate: function (date) {
+        let now_date = new Date();
+        let date_str = date ? date.replaceAll('-', '/') : `${now_date.getFullYear()}/${now_date.getMonth() + 1}/${now_date.getDate()}`;
         function transferToLunar(str) {
-          var lunar;
-          var solarYear = new Date(str).getFullYear();
-          var solarMonth = new Date(str).getMonth();
-          var solarDay = new Date(str).getDate();
-          var solarDateObj;
-          var lunarDateObj,
+          let lunar;
+          let solarYear = new Date(str).getFullYear();
+          let solarMonth = new Date(str).getMonth();
+          let solarDay = new Date(str).getDate();
+          let solarDateObj;
+          let lunarDateObj,
             lunarYear,
             lunarMonth,
             lunarDay = 1;
-          var lunarLeap; // 农历是否闰月
-          var lunarLastDay = 0; // 农历当月最后一天
-          var firstLunarMonth = ''; // 农历第一个月
-          var lunarDayPositionArr = new Array(3);
-          var n = 0;
+          let lunarLeap; // 农历是否闰月
+          let lunarLastDay = 0; // 农历当月最后一天
+          let firstLunarMonth = ''; // 农历第一个月
+          let lunarDayPositionArr = new Array(3);
+          let n = 0;
 
           // 阳历当月天数
-          var solarMonthLength;
+          let solarMonthLength;
           if (solarMonth === 1) {
             solarMonthLength = solarYear % 4 === 0 && solarYear % 100 != 0 || solarYear % 400 === 0 ? 29 : 28;
           } else {
@@ -740,17 +734,17 @@ var Device = function () {
 
           // 算出当前月第一天的农历日期和当前农历日期下一个月农历的第一天日期
           function calculateLunarFirstDay(objDate) {
-            var j,
+            let j,
               leap = 0,
               temp = 0;
-            var baseDate = new Date(1900, 0, 31);
-            var offset = (objDate - baseDate) / 86400000;
-            var dayCycle = offset + 40;
-            var monthCycle = 14;
+            let baseDate = new Date(1900, 0, 31);
+            let offset = (objDate - baseDate) / 86400000;
+            let dayCycle = offset + 40;
+            let monthCycle = 14;
             for (j = 1900; j < 2050 && offset > 0; j++) {
               // 返回农历j年的总天数
-              var sum = 348;
-              for (var k = 0x8000; k > 0x8; k >>= 1) {
+              let sum = 348;
+              for (let k = 0x8000; k > 0x8; k >>= 1) {
                 sum += VariableLibrary.lunarLib.lunarMap[j - 1900] & k ? 1 : 0;
               }
               temp = sum + leapMonthDays(j);
@@ -762,12 +756,12 @@ var Device = function () {
               j--;
               monthCycle -= 12;
             }
-            var year = j;
-            var yearCycle = j - 1864;
+            let year = j;
+            let yearCycle = j - 1864;
 
             // 判断j年的农历中那个月是闰月,不是闰月返回0
             leap = whitchMonthLeap(j);
-            var isLeap = false;
+            let isLeap = false;
             for (j = 1; j < 13 && offset > 0; j++) {
               if (leap > 0 && j === leap + 1 && isLeap === false) {
                 // 闰月
@@ -795,19 +789,19 @@ var Device = function () {
               --j;
               --monthCycle;
             }
-            var month = j;
-            var day = offset + 1;
+            let month = j;
+            let day = offset + 1;
             return {
-              year: year,
-              month: month,
-              day: day,
-              isLeap: isLeap,
-              yearCycle: yearCycle,
-              monthCycle: monthCycle,
-              dayCycle: dayCycle
+              year,
+              month,
+              day,
+              isLeap,
+              yearCycle,
+              monthCycle,
+              dayCycle
             };
           }
-          for (var i = 0; i < solarMonthLength; i++) {
+          for (let i = 0; i < solarMonthLength; i++) {
             if (lunarDay > lunarLastDay) {
               // 阳历当月第一天的日期
               solarDateObj = new Date(solarYear, solarMonth, date ? solarDay : new Date().getDate());
@@ -830,17 +824,17 @@ var Device = function () {
             }
           }
           lunar = {
-            lunarYear: lunarYear,
-            lunarMonth: lunarMonth,
-            lunarDay: lunarDay,
-            lunarLeap: lunarLeap,
+            lunarYear,
+            lunarMonth,
+            lunarDay,
+            lunarLeap,
             chineseZodiac: VariableLibrary.lunarLib.AnimalsArr[(lunarYear - 4) % 12]
           };
 
           // 用中文显示农历的日期
           function chineseDay(date) {
             date = Math.floor(date);
-            var ChineseDate;
+            let ChineseDate;
             switch (date) {
               case 10:
                 ChineseDate = '初十';
@@ -857,12 +851,12 @@ var Device = function () {
             }
             return ChineseDate;
           }
-          var lunarYearArr = String(lunar.lunarYear).split('');
-          var chineseYear = "".concat(VariableLibrary.lunarLib.chineseYear[lunarYearArr[0]]).concat(VariableLibrary.lunarLib.chineseYear[lunarYearArr[1]]).concat(VariableLibrary.lunarLib.chineseYear[lunarYearArr[2]]).concat(VariableLibrary.lunarLib.chineseYear[lunarYearArr[3]]);
+          let lunarYearArr = String(lunar.lunarYear).split('');
+          let chineseYear = `${VariableLibrary.lunarLib.chineseYear[lunarYearArr[0]]}${VariableLibrary.lunarLib.chineseYear[lunarYearArr[1]]}${VariableLibrary.lunarLib.chineseYear[lunarYearArr[2]]}${VariableLibrary.lunarLib.chineseYear[lunarYearArr[3]]}`;
           return {
-            year: "".concat(chineseYear, "\u5E74"),
-            month: "".concat(lunar.isLeap ? '闰' : '').concat(VariableLibrary.lunarLib.chineseMonth[lunar.lunarMonth - 1], "\u6708"),
-            day: "".concat(chineseDay(lunar.lunarDay)),
+            year: `${chineseYear}年`,
+            month: `${lunar.isLeap ? '闰' : ''}${VariableLibrary.lunarLib.chineseMonth[lunar.lunarMonth - 1]}月`,
+            day: `${chineseDay(lunar.lunarDay)}`,
             chineseZodiac: lunar.chineseZodiac
           };
         }
@@ -871,10 +865,10 @@ var Device = function () {
     };
   }();
   // 逻辑层
-  var LogicLibrary = function () {
+  const LogicLibrary = function () {
     return {
-      DeviceInfoObj: function DeviceInfoObj(params) {
-        var info = {
+      DeviceInfoObj: function (params) {
+        let info = {
           deviceType: MethodLibrary.getDeviceType(),
           // 设备类型
           OS: MethodLibrary.getOS(),
@@ -908,30 +902,27 @@ var Device = function () {
           UUID: MethodLibrary.createUUID() // 生成通用唯一标识
         };
 
-        var resultInfo = {};
+        let resultInfo = {};
         if (!params || !params.info || params.info.length === 0) {
           resultInfo = info;
         } else {
-          var infoTemp = {};
-          var _loop = function _loop(i) {
+          let infoTemp = {};
+          for (let i in info) {
             params.info.forEach(function (item) {
               if (item.toLowerCase() === i.toLowerCase()) {
                 item = i;
                 infoTemp[item] = info[item];
               }
             });
-          };
-          for (var i in info) {
-            _loop(i);
           }
           resultInfo = infoTemp;
         }
-        return new Promise(function (resolve) {
+        return new Promise(resolve => {
           if (resultInfo.geoPosition) {
-            MethodLibrary.getGeoPostion().then(function (geoPosition) {
+            MethodLibrary.getGeoPostion().then(geoPosition => {
               resultInfo.geoPosition = '经度:' + geoPosition.coords.longitude + '  纬度:' + geoPosition.coords.latitude;
               resolve(resultInfo);
-            })["catch"](function (err) {
+            }).catch(err => {
               resultInfo.geoPosition = err;
               resolve(resultInfo);
             });
@@ -952,55 +943,38 @@ var Device = function () {
      *
      * @return: 返回 Promise 对象
      */
-    Info: function Info(params) {
+    Info: function (params) {
       MethodLibrary.createLoading();
-      return new Promise(function (resolve) {
-        LogicLibrary.DeviceInfoObj(params).then(function (res) {
+      return new Promise(resolve => {
+        LogicLibrary.DeviceInfoObj(params).then(res => {
           MethodLibrary.removeLoading();
           resolve(res);
         });
       });
     },
-    Submit: function () {
-      var _Submit = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(params) {
-        var baseUrl, url, response;
-        return _regeneratorRuntime().wrap(function _callee$(_context) {
-          while (1) switch (_context.prev = _context.next) {
-            case 0:
-              baseUrl = "https://api.beyounger.com";
-              url = "".concat(baseUrl, "/v1/browerInfo");
-              _context.next = 4;
-              return fetch(url, {
-                method: 'POST',
-                // *GET, POST, PUT, DELETE, etc.
-                mode: 'cors',
-                // no-cors, *cors, same-origin
-                cache: 'no-cache',
-                // *default, no-cache, reload, force-cache, only-if-cached
-                credentials: 'same-origin',
-                // include, *same-origin, omit
-                headers: {
-                  'Content-Type': 'application/json'
-                },
-                redirect: 'follow',
-                // manual, *follow, error
-                referrerPolicy: 'no-referrer',
-                // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-                body: JSON.stringify(params) // body data type must match "Content-Type" header
-              });
-            case 4:
-              response = _context.sent;
-              console.log(response);
-            case 6:
-            case "end":
-              return _context.stop();
-          }
-        }, _callee);
-      }));
-      function Submit(_x) {
-        return _Submit.apply(this, arguments);
-      }
-      return Submit;
-    }()
+    Submit: async function (params) {
+      const baseUrl = "https://api.beyounger.com";
+      const url = `${baseUrl}/v1/browerInfo`;
+      const response = await fetch(url, {
+        method: 'POST',
+        // *GET, POST, PUT, DELETE, etc.
+        mode: 'cors',
+        // no-cors, *cors, same-origin
+        cache: 'no-cache',
+        // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: 'same-origin',
+        // include, *same-origin, omit
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        redirect: 'follow',
+        // manual, *follow, error
+        referrerPolicy: 'no-referrer',
+        // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+        body: JSON.stringify(params) // body data type must match "Content-Type" header
+      });
+
+      console.log(response);
+    }
   };
 }();
