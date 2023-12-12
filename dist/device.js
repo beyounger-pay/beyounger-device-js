@@ -1,4 +1,4 @@
-const Device = function () {
+var Device = function () {
   const root = typeof self !== 'undefined' ? self : this;
   const _window = root || {};
   // 变量库
